@@ -1,0 +1,394 @@
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  /* 4. Add accessible line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+}
+
+.header .desktop-menu a {
+    margin-left: 48px;
+}
+
+* {
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  
+}
+
+h2 {
+  text-align: center;
+}
+
+
+
+h2::before {
+    content: "🐶";
+
+}
+h2::after {
+    content: "🐶";
+}
+
+h1::first-letter {
+    font-size: 50px;
+}
+
+#username::placeholder{
+    color: blue;
+}
+
+p:first-child {
+    color: red;
+}
+
+a:link {
+    color: green;
+}
+
+a:visited {
+    color: orange;
+}
+
+a:hover {
+    background-color: red;
+}
+
+a:active {
+    color: pink;
+}
+
+li[class="a"] {
+    background-color: yellow;
+}
+
+
+
+@media (min-width: 768px) { 
+
+    .mobile-menu {
+
+        display: none;
+
+    }
+
+ }
+
+ @media (max-width: 767px) { 
+
+    .desktop-menu {
+
+        display: none;
+
+    }
+
+ }
+
+ .menu {
+
+    display: none;
+
+ }
+
+ .show {
+
+    display: block;
+
+ }
+
+.center {
+  margin-top: 20px;
+}
+
+ .dog-breed {
+    text-transform: capitalize;
+    font-style: italic;
+ }
+
+ #dogList {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+    width: 100%;
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border: 1px solid gainsboro;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+#dogList {
+  margin-top: 20px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+ .card1 img {
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+ }
+
+ .card2 h3 {
+    padding: 10px;
+    text-transform: capitalize;
+    text-align: center;
+ }
+
+ .center {
+    display: flex;
+    align-items: center;
+    gap: 16px; /* spacing between select and search bar */
+    margin-bottom: 16px;
+ }
+
+ #breed-select {
+  position: relative;
+  width: 300px;
+  height: 40px;
+  border-radius: 8px 8px;
+  background-color: #7B4019;
+  color: white;
+  font-size: 16px;
+  margin-right: 0;
+ }
+
+.search-wrapper {
+  position: relative;
+  max-width: 300px;
+  display: flex; /* ✅ aligns input and button in a row */
+}
+
+/* Input field */
+#breedSearch {
+  flex: 1;
+  font-size: 16px;
+  padding: 8px;
+  border: 2px solid #333446;
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  outline: none;
+  height: 40px;
+  margin-left: 470px;
+  margin-right: 0;
+}
+
+/* Search button */
+#searchButton {
+  padding: 8px 12px;
+  color: white;
+  border: 2px solid #3B060A;
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  height: 40px;
+  font-optical-sizing: auto;
+  justify-content: center;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  cursor: pointer;
+}
+
+#searchButton:active {
+  transform: translateY(2px);
+}
+
+/* Suggestions dropdown */
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 300px;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-left: 470px;
+  margin-right: 0;
+}
+
+.suggestions div {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestions div:hover {
+  background-color: #eee;
+}
+
+#showDogButton {
+  padding: 5px 8px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid black;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+#showDogButton:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 600px) {
+
+  #searchButton {
+    border-radius: 0 0 4px 4px;
+    border-left: 2px solid #3B060A;
+    border-top: none;
+  }
+
+  #showDogButton {
+    font-size: 8px;
+    border-radius: 8px;
+    border: 1px solid black;
+    padding: auto;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+  
+  #searchButton {
+  padding: 8px 12px;
+  color: white;
+  border: 2px solid #3B060A;
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  height: 40px;
+  font-optical-sizing: auto;
+  justify-content: center;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  cursor: pointer;
+}
+
+  .suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 300px;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-left: 20px;
+  margin-right: 0;
+}
+
+#breedSearch {
+  flex: 1;
+  font-size: 16px;
+  padding: 8px;
+  border: 2px solid #333446;
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  outline: none;
+  height: 40px;
+  margin-left: 20px;
+  margin-right: 0;
+}
+  
+  
+}
+
+#searchBar {
+  display: flex;
+  width: 100%;
+  max-width: 300px;
+}
+
+#searchButton {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  cursor: pointer;
+}
+
+#searchButton:active {
+  transform: translateY(2px);
+
+} 
+
+.full-breed-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.full-breed-list li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.full-breed-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.dog-image-display {
+  margin-top: 20px;
+}
+

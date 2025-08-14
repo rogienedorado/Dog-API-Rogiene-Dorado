@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog API By Rogiene Dorado</title>
+    <link rel="stylesheet" href="/assets/styles/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="container header">
+        <a href="/">Rogiene Dorado</a>
+        <div class="desktop-menu">
+            <a href="https://rogienedorado.github.io/Resume-Website/" target="_blank" rel="noopener noreferrer">About</a>
+            <a href="#">Project</a>
+            <a href="#">Contact</a>
+        
+        </div>
+
+        <nav class="mobile-menu">
+
+           <span class="menu-toggle"><img src="/assets/logos/hamburger-menu.svg" width="50" height="50" alt="Hamburger Menu"></span>
+
+           <div class="menu">
+                <a href="https://rogienedorado.github.io/Resume-Website/" target="_blank" rel="noopener noreferrer">About</a>
+                <a href="#">Projects</a>
+                <a href="#">Contacts</a>
+
+           </div>
+
+        </nav>
+
+    </header>
+
+    <section class="container">
+
+        <h1>Home Page</h1>
+        <button id="goToDogList">Load Dog List</button>
+        <h2>All Dog List</h2>
+
+    <div class="center">
+        <!-- <label for="breed-select">Select a breed: </label>     -->
+        <select id="breed-select">
+            <option value="">Loading Breeds</option>
+        </select>
+        <!-- <label for="breedSearch">Search breed: </label> -->
+        <button id="showDogButton">Show dog</button>
+        <div class="search-wrapper">
+            <div id="searchBar"><input type="text" id="breedSearch" placeholder="Type to filter breeds">
+            <button id="searchButton">🔍</button>
+            <div id="suggestionList" class="suggestions"></div>
+            </div>
+            
+        </div>              
+    </div>
+    <div id="fullBreedList" class="full-breed-list" style="margin-top: 20px;"></div>
+    <div id="dogList" style="display: none;"></div>
+    </section>
+
+    <script src="/assets/scripts/main.js"></script>
+
+</body>
+</html> 

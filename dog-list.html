@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Dog Breeds</title>
+  <link rel="stylesheet" href="/assets/styles/styles.css">
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      margin: 20px;
+    }
+    h1 { text-align: center; }
+    .breed-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 20px;
+    }
+    .breed-item {
+      background: #f7f7f7;
+      padding: 12px;
+      border-radius: 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      border: 1px solid #ccc;
+      text-transform: capitalize;
+    }
+    .breed-item:hover { background-color: #eaeaea; }
+    @media (max-width: 1024px) { .breed-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .breed-grid { grid-template-columns: 1fr; } }
+
+   /* Modal background */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .modal-content {
+    background: white;
+    max-width: 900px;
+    width: 100%;
+    max-height: 85vh;  /* limit height so close button is always visible */
+    overflow-y: auto;  /* scroll inside the modal content only */
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: scale(0.95);}
+    to {opacity: 1; transform: scale(1);}
+  }
+
+  /* Close button */
+  .close-btn {
+    position: sticky;       /* stay visible at the top while scrolling */
+    top: 0;                 /* stick to top of modal content */
+    float: right;
+    font-size: 28px; font-weight: bold;
+    color: #333; cursor: pointer;
+    transition: color 0.3s ease;
+    background: white;      /* ensure it’s visible on scroll */
+    padding: 4px 8px;
+    border-radius: 4px;
+    z-index: 10;
+  }
+  .close-btn:hover { color: #ff0000; }
+
+    /* Dog gallery inside modal */
+    #dogImage h2 { text-align: center; margin-bottom: 10px; text-transform: capitalize; }
+    .dog-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .dog-photo {
+      width: 100%; height: auto; border-radius: 8px; object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .dog-photo:hover { transform: scale(1.05); }
+
+    /* Back button */
+    .back-btn {
+      display: block;
+      margin: 10px auto 20px auto;
+      background: #333;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 16px;
+      transition: background 0.3s ease;
+    }
+    .back-btn:hover { background: #555; }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .page-btn {
+      padding: 6px 12px;
+      border: 1px solid #333;
+      background: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+    .page-btn:hover { background: #eee; }
+    .page-btn.active {
+      background: #333;
+      color: #fff;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>All Dog Breeds</h1>
+  <div class="breed-grid" id="breedGrid"></div>
+
+  <!-- Modal -->
+  <div id="dogModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModal">&times;</span>
+      <div id="dogImage"></div>
+    </div>
+  </div>
+
+  <a href="index.html" 
+   style="
+     position: fixed;
+     bottom: 20px;
+     left: 20px;
+     text-decoration: none;
+     color: white;
+     background: #007BFF;
+     padding: 10px 15px;
+     border-radius: 5px;">
+   ← Back to Home
+</a>
+
+  <script>
+    async function loadBreeds() {
+      try {
+        const res = await fetch("https://dog.ceo/api/breeds/list/all");
+        const data = await res.json();
+        const breeds = data.message;
+        const grid = document.getElementById("breedGrid");
+
+        for (const breed in breeds) {
+          if (breeds[breed].length > 0) {
+            breeds[breed].forEach(sub => {
+              const div = document.createElement('div');
+              div.className = "breed-item";
+              div.textContent = `${sub} ${breed}`;
+              div.onclick = () => openBreedModal(`${breed}/${sub}`);
+              grid.appendChild(div);
+            });
+          } else {
+            const div = document.createElement('div');
+            div.className = "breed-item";
+            div.textContent = breed;
+            div.onclick = () => openBreedModal(breed);
+            grid.appendChild(div);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch breeds:", err);
+      }
+    }
+
+    async function openBreedModal(breed) {
+      const modal = document.getElementById("dogModal");
+      const dogImage = document.getElementById("dogImage");
+      dogImage.innerHTML = `<p>Loading images...</p>`;
+      modal.style.display = "flex";
+
+      try {
+        const res = await fetch(`https://dog.ceo/api/breed/${breed}/images`);
+        const data = await res.json();
+        const images = data.message;
+
+        function renderPage(page) {
+          const start = (page - 1) * 10;
+          const end = start + 10;
+          const pageImages = images.slice(start, end);
+
+          dogImage.innerHTML = `
+            <h2>${breed.replace('/', ' ')}</h2>
+            <a href="dog-list.html" class="back-btn">Go Back to Breed List</a>
+            <div class="dog-gallery">
+              ${pageImages.map(img => `<img src="${img}" class="dog-photo" alt="${breed}">`).join('')}
+            </div>
+            <div class="pagination">
+              ${Array.from({length: Math.ceil(images.length / 10)}, (_, i) => `
+                <button class="page-btn ${i+1===page?'active':''}" onclick="renderPage(${i+1})">${i+1}</button>
+              `).join('')}
+            </div>
+          `;
+        }
+
+        // Expose renderPage so onclick works
+        window.renderPage = renderPage;
+        renderPage(1);
+
+      } catch (err) {
+        dogImage.innerHTML = `<p>Failed to load images. Try again later.</p>`;
+        console.error("Failed to fetch dog images:", err);
+      }
+    }
+
+    document.getElementById("closeModal").onclick = function() {
+      document.getElementById("dogModal").style.display = "none";
+    };
+    window.onclick = function(event) {
+      const modal = document.getElementById("dogModal");
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+
+    loadBreeds();
+  </script>
+
+</body>
+</html>
