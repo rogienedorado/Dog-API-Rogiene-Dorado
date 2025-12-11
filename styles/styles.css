@@ -20,7 +20,7 @@ body {
   line-height: 1.5;
   /* 5. Improve text rendering */
   -webkit-font-smoothing: antialiased;
-  background-image: url("../assets/images/footerbg.jpeg");
+  background-image: url("https://rogienedorado.github.io/Dog-API-Rogiene-Dorado/assets/images/footerbg.jpeg");
   background-size: 40%;
   background-repeat: no-repeat;
   background-attachment: fixed;
